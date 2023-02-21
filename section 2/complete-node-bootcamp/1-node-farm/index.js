@@ -44,12 +44,18 @@ fs.readFile("./starter/txt/stSSart.txt", "utf-8", (err, data1) => {
 
 ////////////////////////////////////////////////////
 //  SERVER
+const data = fs.readFileSync(`${__dirname}/starter/dev-data/data.json`, "utf-8");
+const dataObj = JSON.parse(data);
+
 const server = http.createServer((req, res) => {
     const pathName = req.url;
     if (pathName === "/" || pathName === "/overview") {
         res.end("this is OVERVIEW!");
     } else if (pathName === "/products") {
         res.end("this is PRODUCTS");
+    } else if (pathName === "/api") {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(data);
     } else {
         res.writeHead(404, {
             "Content-Type": "text/html",
